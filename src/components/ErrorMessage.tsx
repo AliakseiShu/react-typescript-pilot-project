@@ -1,10 +1,14 @@
 import React from 'react';
 
-export const ErrorMessage = () => {
+interface ErrorMessageProps {
+	error:string
+}
+
+export const ErrorMessage = ({ error }:ErrorMessageProps) => {
 
 	return (
 		<div>
-			<p className="text-center">Loading...</p>
+			<p className="text-center">{error}</p>
 		</div>
 	);
 };
