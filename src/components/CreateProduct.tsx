@@ -1,8 +1,8 @@
 import React from 'react';
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import {BasicModal} from "./BasicModal";
+import {Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -21,7 +21,7 @@ export const CreateProduct = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	return (
-		<div>
+		<BasicModal>
 			<Button onClick={handleOpen}>Open modal</Button>
 			<Modal
 				open={open}
@@ -36,10 +36,10 @@ export const CreateProduct = () => {
 					<input type="text"
 								 className="border py-2 px-4 mb-4 w-full outline-0"
 								 placeholder="Enter product title..."/>
-					<button type="submit" className="py-2 px-4 border bg-yellow-400 hover:text-white mb-4">Create</button>
+					<button className="py-2 px-4 border bg-yellow-400 hover:text-white mb-4">Create</button>
 				</Box>
 			</Modal>
-		</div>
+		</BasicModal>
 	)
 };
 
