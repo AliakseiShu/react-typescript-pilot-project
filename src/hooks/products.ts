@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {IProduct} from "../models";
 import axios, {AxiosError} from "axios";
 
@@ -28,5 +28,5 @@ export const useProducts = () => {
 	useEffect(() => {
 		fetchProducts()
 	}, [])
-	return {products, error, loading, addProduct}
+	return {products, error, loading, addProduct, setError}
 }

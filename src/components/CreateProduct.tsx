@@ -6,6 +6,8 @@ import {IProduct} from "../models";
 import axios from "axios";
 import {ErrorMessage} from "./ErrorMessage";
 import {useProducts} from "../hooks/products";
+import {Product} from "./Product";
+import {Loader} from "./Loader";
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -36,9 +38,13 @@ export const CreateProduct = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const [value, setValue] = useState('')
-	const [error, setError] = useState('')
+	//const [error, setError] = useState('')
 
-	const {addProduct} = useProducts()
+	const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+		setValue(event.currentTarget.value)
+	}
+
+	const {addProduct, products, loading, error, setError} = useProducts()
 
 	const createHandler = (productData: IProduct) => {
 		setOpen(false)
@@ -57,12 +63,12 @@ export const CreateProduct = () => {
 		setValue('')
 	}
 
-	const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		setValue(event.currentTarget.value)
-	}
-
 	return (
-		<div>
+		<div className="container mx-auto max-w-2xl pt-5">
+			{loading && <Loader/>}
+			{error && <ErrorMessage error={error}/>}
+			{products.map(product => <Product product={product} key={product.id}/>)}
+			<CreateProduct/>
 			<BasicModal>
 				<button onClick={handleOpen}
 								className="fixed bottom-5 rounded-full bg-red-700 text-white text-2xl px-4 py-2">Add
