@@ -68,7 +68,6 @@ export const CreateProduct = () => {
 			{loading && <Loader/>}
 			{error && <ErrorMessage error={error}/>}
 			{products.map(product => <Product product={product} key={product.id}/>)}
-			<CreateProduct/>
 			<BasicModal>
 				<button onClick={handleOpen}
 								className="fixed bottom-5 rounded-full bg-red-700 text-white text-2xl px-4 py-2">Add
