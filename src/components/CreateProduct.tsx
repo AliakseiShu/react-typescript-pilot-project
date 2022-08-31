@@ -1,12 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
 import {BasicModal} from "./BasicModal";
 import {Box, Typography} from "@mui/material";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import {IProduct} from "../models";
-import {Simulate} from "react-dom/test-utils";
 import axios from "axios";
 import {ErrorMessage} from "./ErrorMessage";
+import {useProducts} from "../hooks/products";
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -39,6 +38,13 @@ export const CreateProduct = () => {
 	const [value, setValue] = useState('')
 	const [error, setError] = useState('')
 
+	const {addProduct} = useProducts()
+
+	const createHandler = (productData: IProduct) => {
+		setOpen(false)
+		addProduct(productData)
+	}
+
 	const onclickHandler = async () => {
 		setError('')
 		if (value.trim().length === 0) {
@@ -47,6 +53,8 @@ export const CreateProduct = () => {
 		}
 		productData.title = value
 		const response = await axios.post<IProduct>('https://fakestoreapi.com/products', productData)
+		createHandler(response.data)
+		setValue('')
 	}
 
 	const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,20 +64,19 @@ export const CreateProduct = () => {
 	return (
 		<div>
 			<BasicModal>
-				<Button onClick={handleOpen}>Open modal</Button>
-
+				<button onClick={handleOpen}
+								className="fixed bottom-5 rounded-full bg-red-700 text-white text-2xl px-4 py-2">Add
+				</button>
 				<Modal
 					open={open}
 					onClose={handleClose}
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 				>
-
 					<Box sx={style}>
 						<Typography id="modal-modal-title" variant="h6" component="h2">
 							Create new product
 						</Typography>
-
 						<input type="text"
 									 className="border py-2 px-4 mb-4 w-full outline-0"
 									 placeholder="Enter product title..."
@@ -79,12 +86,11 @@ export const CreateProduct = () => {
 
 						{error && <ErrorMessage error={error}/>}
 
-						<button onClick={onclickHandler} type="submit"
+						<button onClick={onclickHandler}
 										className="py-2 px-4 border bg-yellow-400 hover:text-white mb-4">Create
 						</button>
 					</Box>
 				</Modal>
-
 			</BasicModal>
 		</div>
 	)
