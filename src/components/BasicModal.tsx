@@ -10,6 +10,7 @@ export const BasicModal: FC<BasicModalProps> = ({children}) => {
 		<div>
 			{children}
 		</div>
+
 	)
 };
 

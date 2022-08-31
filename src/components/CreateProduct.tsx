@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, ChangeEventHandler, useState} from 'react';
 import {BasicModal} from "./BasicModal";
 import {Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -20,26 +20,37 @@ export const CreateProduct = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+	const [value, setValue] = useState('')
+
+	const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+		setValue(event.currentTarget.value)
+	}
+
 	return (
-		<BasicModal>
-			<Button onClick={handleOpen}>Open modal</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box sx={style}>
-					<Typography id="modal-modal-title" variant="h6" component="h2">
-						Create new product
-					</Typography>
-					<input type="text"
-								 className="border py-2 px-4 mb-4 w-full outline-0"
-								 placeholder="Enter product title..."/>
-					<button className="py-2 px-4 border bg-yellow-400 hover:text-white mb-4">Create</button>
-				</Box>
-			</Modal>
-		</BasicModal>
+		<div>
+			<BasicModal>
+				<Button onClick={handleOpen}>Open modal</Button>
+				<Modal
+					open={open}
+					onClose={handleClose}
+					aria-labelledby="modal-modal-title"
+					aria-describedby="modal-modal-description"
+				>
+					<Box sx={style}>
+							<Typography id="modal-modal-title" variant="h6" component="h2">
+								Create new product
+							</Typography>
+							<input type="text"
+										 className="border py-2 px-4 mb-4 w-full outline-0"
+										 placeholder="Enter product title..."
+										 value={value}
+										 onChange={onChangeHandler}
+							/>
+							<button type="submit" className="py-2 px-4 border bg-yellow-400 hover:text-white mb-4">Create</button>
+					</Box>
+				</Modal>
+			</BasicModal>
+		</div>
 	)
 };
 
