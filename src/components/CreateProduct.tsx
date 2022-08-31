@@ -3,7 +3,7 @@ import {BasicModal} from "./BasicModal";
 import {Box, Typography} from "@mui/material";
 import Modal from "@mui/material/Modal";
 import {IProduct} from "../models";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {ErrorMessage} from "./ErrorMessage";
 import {useProducts} from "../hooks/products";
 import {Product} from "./Product";
@@ -38,13 +38,12 @@ export const CreateProduct = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const [value, setValue] = useState('')
-	//const [error, setError] = useState('')
 
 	const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		setValue(event.currentTarget.value)
 	}
 
-	const {addProduct, products, loading, error, setError} = useProducts()
+	const {addProduct, products, loading, error, setError, setLoading} = useProducts()
 
 	const createHandler = (productData: IProduct) => {
 		setOpen(false)
@@ -52,15 +51,21 @@ export const CreateProduct = () => {
 	}
 
 	const onclickHandler = async () => {
-		setError('')
-		if (value.trim().length === 0) {
-			setError('Please enter valid tittle')
-			return
+		try {
+			setError('')
+			if (value.trim().length === 0) {
+				setError('Please enter valid tittle')
+				return
+			}
+			productData.title = value
+			const response = await axios.post<IProduct>('https:/ww/fakestoreapi.com/products', productData)
+			createHandler(response.data)
+			setValue('')
+		} catch (e:unknown) {
+			const error = e as AxiosError
+			setLoading(false)
+			setError(error.message)
 		}
-		productData.title = value
-		const response = await axios.post<IProduct>('https://fakestoreapi.com/products', productData)
-		createHandler(response.data)
-		setValue('')
 	}
 
 	return (

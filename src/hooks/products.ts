@@ -28,5 +28,5 @@ export const useProducts = () => {
 	useEffect(() => {
 		fetchProducts()
 	}, [])
-	return {products, error, loading, addProduct, setError}
+	return {products, error, loading, addProduct, setError, setLoading}
 }
