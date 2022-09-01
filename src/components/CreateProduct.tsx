@@ -58,10 +58,10 @@ export const CreateProduct = () => {
 				return
 			}
 			productData.title = value
-			const response = await axios.post<IProduct>('https:/ww/fakestoreapi.com/products', productData)
+			const response = await axios.post<IProduct>('https://fakestoreapi.com/products', productData)
 			createHandler(response.data)
 			setValue('')
-		} catch (e:unknown) {
+		} catch (e: unknown) {
 			const error = e as AxiosError
 			setLoading(false)
 			setError(error.message)
