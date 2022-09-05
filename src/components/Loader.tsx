@@ -22,7 +22,10 @@ export const Loader = () => {
 	}, []);
 	return (
 		<Box sx={{ width: '100%' }}>
-			<LinearProgress  variant="indeterminate" value={progress} color="success" />
+			<LinearProgress
+				variant="indeterminate"
+				value={progress}
+				color="success" />
 		</Box>
 	);
 };

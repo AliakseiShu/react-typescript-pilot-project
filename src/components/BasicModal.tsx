@@ -5,7 +5,6 @@ interface BasicModalProps {
 }
 
 export const BasicModal: FC<BasicModalProps> = ({children}) => {
-
 	return (
 		<div>
 			{children}

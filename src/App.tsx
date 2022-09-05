@@ -5,7 +5,6 @@ import {Navigation} from "./components/Navigation";
 import {CreateProduct} from "./components/CreateProduct";
 
 function App() {
-
 	return (
 		<>
 			<Navigation/>
